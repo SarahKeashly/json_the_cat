@@ -7,17 +7,25 @@ const fetchBreedDescription = function(breedName, callback) {
 
   request(url, (error, response, body) => {
     if (error) {
-      return "ERROR", error;
+      callback(error, null);//prints null because there needs to be 2 parameters as per the request library, however nothing needs to print out here
     }
 
     const data = JSON.parse(body)[0];
-
+    console.log("data", data);
     if (!data) {
-      return "There are no cats by that name";
-    }
+      callback("no cat", null);//returns on the first parameter of the callback function
 
-    console.log(data.description);
+      return;
+    }
+    console.log("string: hitting null")
+    callback(null, data.description); //prints null because there needs to be 2 parameters as per the request library, however nothing needs to print out
+
+    console.log('callback', callback);
+
   });
+
+
+
 };
 
 module.exports = { fetchBreedDescription };
